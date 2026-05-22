@@ -75,15 +75,7 @@ app.post('/bookings',async(req,res)=>{
     //       pname: updatedData.pname,
     //       phone: updatedData.phone,
     //       email: updatedData.email,
-    //       date: updatedData.date,
-    //       doctorName: updatedData.doctorName,
-    //       gender: updatedData.gender,
-    //      time: updatedData.time,
-    //     },
-    //   };
-    //   const result = await bookingCollection.updateOne(query, updateDoc);
-    //   res.send(result);
-    // });
+    
 
     app.patch("/bookings/:id", async (req, res) => {
   const { id } = req.params;
