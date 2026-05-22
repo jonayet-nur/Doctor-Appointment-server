@@ -24,6 +24,7 @@ async function run() {
     await client.connect();
     const db = client.db('doctor-manager')
     const doctorCollection = db.collection('all-appiontment')
+    const bookingCollection = db.collection('bookings')
 
      app.get('/all-appointment',async(req,res)=>{
       const cursor = doctorCollection.find()
@@ -47,6 +48,13 @@ app.get('/all-appointment/:id',async(req,res)=>{
   const {id} = req.params
   const result = await doctorCollection.findOne({_id: new ObjectId(id)})
   res.json(result)
+})
+
+app.post('/bookings',async(req,res)=>{
+  const booking = req.body
+   console.log("data to be inserted  booking", booking);
+   const result = await bookingCollection.insertOne(booking)
+   res.json(result)
 })
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
