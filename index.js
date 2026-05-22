@@ -65,8 +65,6 @@ app.post('/bookings',async(req,res)=>{
     });
 
      // patch api for update the appointment  card data
-
-
     app.patch("/bookings/:id", async (req, res) => {
   const { id } = req.params;
   const updatedData = req.body;
@@ -109,7 +107,6 @@ console.log(updatedData)
 }
 run().catch(console.dir);
 
- 
 app.get('/',(req,res)=>{
     res.send("hello get port running 5000")
 })
