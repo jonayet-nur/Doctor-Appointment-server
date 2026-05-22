@@ -64,6 +64,52 @@ app.post('/bookings',async(req,res)=>{
       res.send(result);
     });
 
+     // patch api for update the appointment  card data
+
+    // app.patch("/bookings/:id",async (req, res) => {
+    //   const {id }= req.params
+    //   const updatedData = req.body;
+    //   const query = { _id: new ObjectId(id) };
+    //   const updateDoc = {
+    //     $set: {
+    //       pname: updatedData.pname,
+    //       phone: updatedData.phone,
+    //       email: updatedData.email,
+    //       date: updatedData.date,
+    //       doctorName: updatedData.doctorName,
+    //       gender: updatedData.gender,
+    //      time: updatedData.time,
+    //     },
+    //   };
+    //   const result = await bookingCollection.updateOne(query, updateDoc);
+    //   res.send(result);
+    // });
+
+    app.patch("/bookings/:id", async (req, res) => {
+  const { id } = req.params;
+  const updatedData = req.body;
+console.log(updatedData)
+  const query = { _id: new ObjectId(id) };
+
+  const updateDoc = {
+    $set: {
+      patientName: updatedData.patientName,
+      phone: updatedData.phone,
+      userEmail: updatedData.userEmail,
+      appointmentDate: updatedData.appointmentDate,
+      doctorName: updatedData.doctorName,
+      gender: updatedData.gender,
+      appointmentTime: updatedData.appointmentTime,
+    },
+  };
+
+  const result = await bookingCollection.updateOne(query, updateDoc);
+
+  res.send(result);
+});
+
+
+
     app.delete('/bookings/:id',async(req,res)=>{
       const {id} = req.params
       const result = await bookingCollection.deleteOne({_id: new ObjectId(id)})
