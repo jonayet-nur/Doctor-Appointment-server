@@ -4,6 +4,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 dotenv.config();
 const uri = process.env.MONGODB_URI
 const cors = require('cors');
+const { createRemoteJWKSet, jwtVerify } = require('jose-cjs');
 const app = express()
 const port = process.env.PORT
 
@@ -18,6 +19,29 @@ const client = new MongoClient(uri, {
   }
 });
 
+//jwt token generate
+
+const JWKS = createRemoteJWKSet(
+    new URL(`${process.env.CLIENT_URL}/api/auth/jwks`)
+)
+
+const verifyToken = async (req, res, next) => {
+    const bearerToken = req.headers.authorization
+    if (!bearerToken) {
+        return res.status(401).json({ message: 'unauthoeized' })
+    }
+    const token = bearerToken.split(' ')[1]
+    if (!token) {
+        return res.status(401).json({ message: 'unauthoeized' })
+    }
+    try {
+        const { payload } = await jwtVerify(token, JWKS)
+        console.log(payload)
+        next()
+    } catch {
+        return res.status(401).json({ message: 'unauthoeized' })
+    }
+}
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
@@ -44,7 +68,7 @@ async function run() {
   res.send(result);
 });
 
-app.get('/all-appointment/:id',async(req,res)=>{
+app.get('/all-appointment/:id',verifyToken,async(req,res)=>{
   const {id} = req.params
   const result = await doctorCollection.findOne({_id: new ObjectId(id)})
   res.json(result)
