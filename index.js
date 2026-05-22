@@ -71,18 +71,30 @@ app.post('/bookings',async(req,res)=>{
 console.log(updatedData)
   const query = { _id: new ObjectId(id) };
 
-  const updateDoc = {
+  // const updateDoc = {
+  //   $set: {
+  //     patientName: updatedData.patientName,
+  //     phone: updatedData.phone,
+  //     userEmail: updatedData.userEmail,
+  //     appointmentDate: updatedData.appointmentDate,
+  //     doctorName: updatedData.doctorName,
+  //     gender: updatedData.gender,
+  //     appointmentTime: updatedData.appointmentTime,
+  //   },
+  // };
+
+   const updateDoc = {
     $set: {
-      patientName: updatedData.patientName,
+      pname: updatedData.pname,
       phone: updatedData.phone,
-      userEmail: updatedData.userEmail,
-      appointmentDate: updatedData.appointmentDate,
-      doctorName: updatedData.doctorName,
+      email: updatedData.email,
+      date: updatedData.date,
+      dname: updatedData.dname,
       gender: updatedData.gender,
-      appointmentTime: updatedData.appointmentTime,
+      time: updatedData.time,
     },
   };
-
+console.log(updateDoc)
   const result = await bookingCollection.updateOne(query, updateDoc);
 
   res.send(result);
