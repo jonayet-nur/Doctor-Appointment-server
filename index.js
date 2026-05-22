@@ -66,16 +66,6 @@ app.post('/bookings',async(req,res)=>{
 
      // patch api for update the appointment  card data
 
-    // app.patch("/bookings/:id",async (req, res) => {
-    //   const {id }= req.params
-    //   const updatedData = req.body;
-    //   const query = { _id: new ObjectId(id) };
-    //   const updateDoc = {
-    //     $set: {
-    //       pname: updatedData.pname,
-    //       phone: updatedData.phone,
-    //       email: updatedData.email,
-    
 
     app.patch("/bookings/:id", async (req, res) => {
   const { id } = req.params;
