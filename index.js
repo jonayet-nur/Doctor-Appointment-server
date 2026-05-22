@@ -56,6 +56,13 @@ app.post('/bookings',async(req,res)=>{
    const result = await bookingCollection.insertOne(booking)
    res.json(result)
 })
+
+  // get api for all appointments data for my-booking page
+    app.get("/bookings", async (req, res) => {
+      const appointments = bookingCollection.find({});
+      const result = await appointments.toArray();
+      res.send(result);
+    });
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!!");
